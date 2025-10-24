@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  transcriber:
+    build: .
+    container_name: ari-transcriber
+    volumes:
+      - ./app:/usr/src/app
+      - ./google-speech:/usr/src/google-speech:ro
+      - ./captured_audio:/usr/src/app/audio  # Pasta para salvar o áudio
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/google-speech/credenciais.json
+    network_mode: "host"
+    restart: unless-stopped
+    tty: true       # Permite terminal interativo
+    stdin_open: true
